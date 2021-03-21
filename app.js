@@ -25,7 +25,7 @@ app.use('/test2/', () => {
     { svg: { engine: 'svgo', command: '--multipass' } },
     { gif: { engine: 'gifsicle', command: ['--colors', '64', '--use-col=web'] } },
     function logg (error, completed, statistic) {
-      console.log('in da CallBack')
+      console.log('Rapport de compression')
       console.log('-------------')
       console.log(error)
       console.log(completed)
