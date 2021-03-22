@@ -1,0 +1,7 @@
+File from: [../images/[object Object]]
+
+File to: [../comp-img/comp-[object Object]]
+
+Compression algorithm: [-]
+
+Description: File does not exist!

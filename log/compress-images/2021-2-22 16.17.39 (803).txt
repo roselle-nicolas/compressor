@@ -1,0 +1,7 @@
+File from: [../imgages/ter1.jpg]
+
+File to: [../comp-img/comp-ter1.jpg]
+
+Compression algorithm: [-]
+
+Description: File does not exist!

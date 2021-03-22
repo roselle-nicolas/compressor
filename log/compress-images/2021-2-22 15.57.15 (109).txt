@@ -1,0 +1,7 @@
+File from: [../images/undefined]
+
+File to: [../comp-img/comp-undefined]
+
+Compression algorithm: [-]
+
+Description: File does not exist!
