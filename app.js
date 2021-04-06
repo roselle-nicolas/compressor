@@ -16,6 +16,7 @@ app.use(express.json())
 
 //route
 app.use('/api/test', testRoutes)
+
 //auth
 
 module.exports = app

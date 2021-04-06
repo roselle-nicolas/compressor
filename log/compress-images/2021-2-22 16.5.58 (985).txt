@@ -1,7 +1,0 @@
-File from: [../images/wut.png]
-
-File to: [../comp-img/comp-wut.png]
-
-Compression algorithm: [-]
-
-Description: File does not exist!

@@ -1,7 +1,0 @@
-File from: [../train.png]
-
-File to: [../comp-img/comp-train.png]
-
-Compression algorithm: [-]
-
-Description: File does not exist!
