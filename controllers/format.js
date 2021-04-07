@@ -1,5 +1,5 @@
 const compress_images = require('compress-images')
-const OUTPUT_path = './temp/comp-'
+const OUTPUT_path = './comp-img/comp-'
 
 exports.jpgComp = (req, res, tcomp) => {
   console.log('Process starting ...')
@@ -13,6 +13,9 @@ exports.jpgComp = (req, res, tcomp) => {
   console.log('input path :', INPUT_path)
   compress_images( INPUT_path, OUTPUT_path, { compress_force: false, statistic: true, autoupdate: true }, false,
     { jpg: { engine: 'mozjpeg', command: ['-quality', tcomp ] } },
+    { png: { engine: false, command: ['--quality=10-'+tcomp, '-o'] } },
+    { svg: { engine: false, command: '--multipass' } },
+    { gif: { engine: false, command: ['--colors', tcomp, '--use-col=web'] } },
     function logg (error, completed, statistic) {
       console.log('Rapport de compression :')
       console.log('-------------')
@@ -35,8 +38,11 @@ exports.pngComp = (req, res, tcomp) => {
   let INPUT_path = './'+req.file.path
   tcomp = req.body.rangeValue
   console.log('input path :', INPUT_path)
-  compress_images( INPUT_path, OUTPUT_path, { compress_force: false, statistic: true, autoupdate: true }, false,
+  compress_images( INPUT_path, OUTPUT_path, { compress_force: false, statistic: true, autoupdate: true }, false, 
+    { jpg: { engine: false, command: ['-quality', tcomp ] } },
     { png: { engine: 'pngquant', command: ['--quality=10-'+tcomp, '-o'] } },
+    { svg: { engine: false, command: '--multipass' } },
+    { gif: { engine: false, command: ['--colors', tcomp, '--use-col=web'] } },
     function logg (error, completed, statistic) {
       console.log('Rapport de compression :')
       console.log('-------------')
@@ -60,7 +66,11 @@ exports.gifComp = (req, res, tcomp) => {
   tcomp = req.body.rangeValue
   console.log('input path :', INPUT_path)
   compress_images( INPUT_path, OUTPUT_path, { compress_force: false, statistic: true, autoupdate: true }, false,
+    { jpg: { engine: false, command: ['-quality', tcomp ] } },
+    { png: { engine: false, command: ['--quality=10-'+tcomp, '-o'] } },
+    { svg: { engine: false, command: '--multipass' } },
     { gif: { engine: 'gifsicle', command: ['--colors', tcomp, '--use-col=web'] } },
+    
     function logg (error, completed, statistic) {
       console.log('Rapport de compression :')
       console.log('-------------')
@@ -73,7 +83,7 @@ exports.gifComp = (req, res, tcomp) => {
   res.status(200).json({message: 'coucou'})
 }
 
-exports.svgComp = (req, res) => {
+exports.svgComp = (req, res, tcomp) => {
   console.log('Process starting ...')
   console.log('req.file :', req.file)
   console.log('req.body :', req.body)
@@ -84,7 +94,10 @@ exports.svgComp = (req, res) => {
   // tcomp = req.body.rangeValue
   console.log('input path :', INPUT_path)
   compress_images( INPUT_path, OUTPUT_path, { compress_force: false, statistic: true, autoupdate: true }, false,
+    { jpg: { engine: false, command: ['-quality', tcomp ] } },
+    { png: { engine: false, command: ['--quality=10-'+tcomp, '-o'] } },
     { svg: { engine: 'svgo', command: '--multipass' } },
+    { gif: { engine: false, command: ['--colors', tcomp, '--use-col=web'] } },
     function logg (error, completed, statistic) {
       console.log('Rapport de compression :')
       console.log('-------------')
