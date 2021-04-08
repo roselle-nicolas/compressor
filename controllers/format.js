@@ -40,7 +40,7 @@ exports.pngComp = (req, res, tcomp) => {
   console.log('input path :', INPUT_path)
   compress_images( INPUT_path, OUTPUT_path, { compress_force: false, statistic: true, autoupdate: true }, false, 
     { jpg: { engine: false, command: ['-quality', tcomp ] } },
-    { png: { engine: 'pngquant', command: ['--quality=10-'+tcomp, '-o'] } },
+    { png: { engine: 'pngquant', command: ['--quality='+tcomp+'100', '-o'] } },
     { svg: { engine: false, command: '--multipass' } },
     { gif: { engine: false, command: ['--colors', tcomp, '--use-col=web'] } },
     function logg (error, completed, statistic) {
