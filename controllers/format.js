@@ -24,8 +24,8 @@ exports.jpgComp = (req, res, tcomp) => {
       console.log('static :', statistic)
       console.log('-------------')
       console.log('TERMINUS')
+      res.status(200).json({message: `comp-${req.file.filename}`})
     })
-  res.status(200).json({message: `${req.protocol}://${req.get('host')}/comp-img/comp-${req.file.filename}`})
 }
 
 exports.pngComp = (req, res, tcomp) => {
@@ -51,8 +51,8 @@ exports.pngComp = (req, res, tcomp) => {
       console.log('static :', statistic)
       console.log('-------------')
       console.log('TERMINUS')
+      res.status(200).json({message: `comp-${req.file.filename}`})
     })
-  res.status(200).json({message: `${req.protocol}://${req.get('host')}/comp-img/comp-${req.file.filename}`})
 }
 
 exports.gifComp = (req, res, tcomp) => {
@@ -79,8 +79,8 @@ exports.gifComp = (req, res, tcomp) => {
       console.log('static :', statistic)
       console.log('-------------')
       console.log('TERMINUS')
+      res.status(200).json({message: `comp-${req.file.filename}`})
     })
-  res.status(200).json({message: `${req.protocol}://${req.get('host')}/comp-img/comp-${req.file.filename}`})
 }
 
 exports.svgComp = (req, res, tcomp) => {
@@ -106,7 +106,7 @@ exports.svgComp = (req, res, tcomp) => {
       console.log('static :', statistic)
       console.log('-------------')
       console.log('TERMINUS')
+      res.status(200).json({message: `comp-${req.file.filename}`})
     })
-  res.status(200).json({message: `${req.protocol}://${req.get('host')}/comp-img/comp-${req.file.filename}`})
 }
 
