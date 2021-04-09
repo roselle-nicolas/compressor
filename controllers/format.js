@@ -24,7 +24,7 @@ exports.jpgComp = (req, res, tcomp) => {
       console.log('static :', statistic)
       console.log('-------------')
       console.log('TERMINUS')
-      res.status(200).json({message: `comp-${req.file.filename}`})
+      res.status(200).json({message: `http://localhost:3333/assets/${req.file.filename}`})
     })
 }
 
@@ -51,7 +51,7 @@ exports.pngComp = (req, res, tcomp) => {
       console.log('static :', statistic)
       console.log('-------------')
       console.log('TERMINUS')
-      res.status(200).json({message: `comp-${req.file.filename}`})
+      res.status(200).json({message: `http://localhost:3333/assets/${req.file.filename}`})
     })
 }
 
@@ -79,7 +79,7 @@ exports.gifComp = (req, res, tcomp) => {
       console.log('static :', statistic)
       console.log('-------------')
       console.log('TERMINUS')
-      res.status(200).json({message: `comp-${req.file.filename}`})
+      res.status(200).json({message: `http://localhost:3333/assets/${req.file.filename}`})
     })
 }
 
@@ -106,7 +106,7 @@ exports.svgComp = (req, res, tcomp) => {
       console.log('static :', statistic)
       console.log('-------------')
       console.log('TERMINUS')
-      res.status(200).json({message: `comp-${req.file.filename}`})
+      res.status(200).json({message: `http://localhost:3333/assets/${req.file.filename}`})
     })
 }
 
