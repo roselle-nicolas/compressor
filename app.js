@@ -17,7 +17,7 @@ app.use(express.json())
 
 //route
 app.use('/api/onepic', formatRoutes)
-app.use('/assets', express.static(path.join(__dirname, 'comp-img/comp-temp')))
+app.use('/assets', express.static(path.join(__dirname, 'comp-img')))
 
 //auth
 
