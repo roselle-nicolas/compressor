@@ -1,5 +1,5 @@
 const compress_images = require('compress-images')
-const OUTPUT_path = './comp-img/comp-'
+const OUTPUT_path = './comp_img/comp-'
 
 const HOST = "ontheroad-dev.fr"
 
