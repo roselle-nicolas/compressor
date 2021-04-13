@@ -2,7 +2,7 @@ const compress_images = require('compress-images')
 const OUTPUT_path = './comp_img/comp-'
 
 const HOST = "ontheroad-dev.fr"
-const PORT = 3333
+const PORT = "3333"
 
 exports.jpgComp = (req, res, tcomp) => {
   console.log('Process starting ...')
