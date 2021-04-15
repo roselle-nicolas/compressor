@@ -29,7 +29,6 @@
     "gifsicle": "^5.2.0",
     "http": "0.0.1-security",
     "image-resize-compress": "^1.0.8",
-    "path": "^0.12.7",
     "pngquant-bin": "^6.0.0"
   },
   "devDependencies": {

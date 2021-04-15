@@ -1,5 +1,8 @@
 const compress_images = require('compress-images')
-const OUTPUT_path = './comp-img/comp-'
+const OUTPUT_path = './comp_img/comp-'
+
+const HOST = "ontheroad-dev.fr"
+const PORT = "3333"
 
 exports.jpgComp = (req, res, tcomp) => {
   console.log('Process starting ...')
@@ -24,7 +27,7 @@ exports.jpgComp = (req, res, tcomp) => {
       console.log('static :', statistic)
       console.log('-------------')
       console.log('TERMINUS')
-      res.status(200).json({message: `http://localhost:3333/assets/${req.file.filename}`})
+      res.status(200).json({pictureLink: `http://${HOST}:${PORT}/assets/comp-${req.file.filename}`})
     })
 }
 
@@ -51,7 +54,7 @@ exports.pngComp = (req, res, tcomp) => {
       console.log('static :', statistic)
       console.log('-------------')
       console.log('TERMINUS')
-      res.status(200).json({message: `http://localhost:3333/assets/${req.file.filename}`})
+      res.status(200).json({pictureLink: `http://${HOST}:${PORT}/assets/comp-${req.file.filename}`})
     })
 }
 
@@ -79,7 +82,7 @@ exports.gifComp = (req, res, tcomp) => {
       console.log('static :', statistic)
       console.log('-------------')
       console.log('TERMINUS')
-      res.status(200).json({message: `http://localhost:3333/assets/${req.file.filename}`})
+      res.status(200).json({pictureLink: `http://${HOST}:${PORT}/assets/comp-${req.file.filename}`})
     })
 }
 
@@ -106,7 +109,7 @@ exports.svgComp = (req, res, tcomp) => {
       console.log('static :', statistic)
       console.log('-------------')
       console.log('TERMINUS')
-      res.status(200).json({message: `http://localhost:3333/assets/${req.file.filename}`})
+      res.status(200).json({pictureLink: `http://${HOST}:${PORT}/assets/comp-${req.file.filename}`})
     })
 }
 

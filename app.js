@@ -1,7 +1,6 @@
 const express = require('express')
-const testRoutes = require('./routes/test')
 const formatRoutes = require('./routes/format')
-const path= require('path')
+const path = require('path')
 // route
 
 
@@ -17,9 +16,8 @@ app.use((req, res, next) => {
 app.use(express.json())
 
 //route
-app.use('/api/test', testRoutes)
 app.use('/api/onepic', formatRoutes)
-app.use('/assets', express.static(path.join(__dirname, 'comp-img/comp-temp')))
+app.use('/assets', express.static(path.join(__dirname, 'comp_img')))
 
 //auth
 
