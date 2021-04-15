@@ -1,7 +1,8 @@
 const express = require('express')
-const formatRoutes = require('./routes/format')
 const path = require('path')
-// route
+const ENV = require('./env')
+// route export module
+const formatRoutes = require('./routes/format')
 
 
 const app = express()
@@ -15,10 +16,11 @@ app.use((req, res, next) => {
 
 app.use(express.json())
 
-//route
+//route API
 app.use('/api/onepic', formatRoutes)
-app.use('/assets', express.static(path.join(__dirname, 'comp_img')))
 
-//auth
+//static serve
+  //picture compress
+  app.use('/assets', express.static(path.join(__dirname, ENV.folderPictureCompress)))
 
 module.exports = app
