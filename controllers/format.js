@@ -1,4 +1,5 @@
 const compress_images = require('compress-images')
+const ENV = require('../env')
 const OUTPUT_path = './comp-img/comp-'
 
 exports.jpgComp = (req, res, tcomp) => {
@@ -24,7 +25,9 @@ exports.jpgComp = (req, res, tcomp) => {
       console.log('static :', statistic)
       console.log('-------------')
       console.log('TERMINUS')
-      res.status(200).json({message: `http://localhost:3333/assets/${req.file.filename}`})
+      const pinctureLink = `http://${ENV.host}:${ENV.port}/assets/${ENV.picturePrefix + req.file.filename}`
+      console.log('picktureLink : ', pinctureLink);
+      res.status(200).json({pictureLink: pinctureLink})
     })
 }
 
@@ -51,7 +54,9 @@ exports.pngComp = (req, res, tcomp) => {
       console.log('static :', statistic)
       console.log('-------------')
       console.log('TERMINUS')
-      res.status(200).json({message: `http://localhost:3333/assets/${req.file.filename}`})
+      const pinctureLink = `http://${ENV.host}:${ENV.port}/assets/${ENV.picturePrefix + req.file.filename}`
+      console.log('picktureLink : ', pinctureLink);
+      res.status(200).json({pictureLink: pinctureLink})
     })
 }
 
@@ -79,7 +84,9 @@ exports.gifComp = (req, res, tcomp) => {
       console.log('static :', statistic)
       console.log('-------------')
       console.log('TERMINUS')
-      res.status(200).json({message: `http://localhost:3333/assets/${req.file.filename}`})
+      const pinctureLink = `http://${ENV.host}:${ENV.port}/assets/${ENV.picturePrefix + req.file.filename}`
+      console.log('picktureLink : ', pinctureLink);
+      res.status(200).json({pictureLink: pinctureLink})
     })
 }
 
@@ -106,7 +113,9 @@ exports.svgComp = (req, res, tcomp) => {
       console.log('static :', statistic)
       console.log('-------------')
       console.log('TERMINUS')
-      res.status(200).json({message: `http://localhost:3333/assets/${req.file.filename}`})
+      const pinctureLink = `http://${ENV.host}:${ENV.port}/assets/${ENV.picturePrefix + req.file.filename}`
+      console.log('picktureLink : ', pinctureLink);
+      res.status(200).json({pictureLink: pinctureLink})
     })
 }
 
