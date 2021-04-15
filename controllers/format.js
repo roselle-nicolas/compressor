@@ -2,13 +2,20 @@ const compress_images = require('compress-images')
 const ENV = require('../env')
 const OUTPUT_path = './comp-img/comp-'
 
+const LogFileReq = (req) => {
+  if (ENV.mode === "development") {
+    console.log('Process starting ...')
+    console.log('req.file :', req.file)
+    console.log('req.body :', req.body)
+    console.log('T comp :', req.body.rangeValue)
+    console.log('req.file.filename: ', req.file.filename)
+    console.log('req.file.path :', req.file.path)
+  }
+}
+
 exports.jpgComp = (req, res, tcomp) => {
-  console.log('Process starting ...')
-  console.log('req.file :', req.file)
-  console.log('req.body :', req.body)
-  console.log('T comp :', req.body.rangeValue)
-  console.log('req.file.filename: ', req.file.filename)
-  console.log('req.file.path :', req.file.path)
+  // log fichier entrée
+  LogFileReq(req)
   let INPUT_path = './'+req.file.path
   tcomp = req.body.rangeValue
   console.log('input path :', INPUT_path)
@@ -32,12 +39,8 @@ exports.jpgComp = (req, res, tcomp) => {
 }
 
 exports.pngComp = (req, res, tcomp) => {
-  console.log('Process starting ...')
-  console.log('req.file :', req.file)
-  console.log('req.body :', req.body)
-  console.log('T comp :', req.body.rangeValue)
-  console.log('req.file.filename: ', req.file.filename)
-  console.log('req.file.path :', req.file.path)
+  // log fichier entrée
+  LogFileReq(req)
   let INPUT_path = './'+req.file.path
   tcomp = req.body.rangeValue
   console.log('input path :', INPUT_path)
@@ -61,12 +64,8 @@ exports.pngComp = (req, res, tcomp) => {
 }
 
 exports.gifComp = (req, res, tcomp) => {
-  console.log('Process starting ...')
-  console.log('req.file :', req.file)
-  console.log('req.body :', req.body)
-  console.log('T comp :', req.body.rangeValue)
-  console.log('req.file.filename: ', req.file.filename)
-  console.log('req.file.path :', req.file.path)
+  // log fichier entrée
+  LogFileReq(req)
   let INPUT_path = './'+req.file.path
   tcomp = req.body.rangeValue
   console.log('input path :', INPUT_path)
@@ -91,12 +90,8 @@ exports.gifComp = (req, res, tcomp) => {
 }
 
 exports.svgComp = (req, res, tcomp) => {
-  console.log('Process starting ...')
-  console.log('req.file :', req.file)
-  console.log('req.body :', req.body)
-  console.log('T comp :', req.body.rangeValue)
-  console.log('req.file.filename: ', req.file.filename)
-  console.log('req.file.path :', req.file.path)
+  // log fichier entrée
+  LogFileReq(req)
   let INPUT_path = './'+req.file.path
   // tcomp = req.body.rangeValue
   console.log('input path :', INPUT_path)
