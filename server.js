@@ -1,10 +1,10 @@
 const http = require('http')
-const app = require('./app')
-const nport = 3333
+const app = require("./app")
+const ENV = require('./env')
 
 
-app.set('port', process.env.PORT || nport)
+app.set('port', process.env.PORT || ENV.port)
 const server = http.createServer(app)
-console.log(`Connecté au port ${nport}`)
+console.log(`Connecté au port ${ENV.port}`)
 
-server.listen( process.env.PORT || nport)
+server.listen( process.env.PORT || ENV.port)
