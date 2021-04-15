@@ -26,7 +26,7 @@ exports.jpgComp = (req, res, tcomp) => {
       console.log('-------------')
       console.log('TERMINUS')
       const pinctureLink = `http://${ENV.host}:${ENV.port}/assets/${ENV.picturePrefix + req.file.filename}`
-      console.log('picktureLink : ', pinctureLink);
+      console.log('picktureLink : ', pinctureLink)
       res.status(200).json({pictureLink: pinctureLink})
     })
 }
@@ -55,7 +55,7 @@ exports.pngComp = (req, res, tcomp) => {
       console.log('-------------')
       console.log('TERMINUS')
       const pinctureLink = `http://${ENV.host}:${ENV.port}/assets/${ENV.picturePrefix + req.file.filename}`
-      console.log('picktureLink : ', pinctureLink);
+      console.log('picktureLink : ', pinctureLink)
       res.status(200).json({pictureLink: pinctureLink})
     })
 }
@@ -85,7 +85,7 @@ exports.gifComp = (req, res, tcomp) => {
       console.log('-------------')
       console.log('TERMINUS')
       const pinctureLink = `http://${ENV.host}:${ENV.port}/assets/${ENV.picturePrefix + req.file.filename}`
-      console.log('picktureLink : ', pinctureLink);
+      console.log('picktureLink : ', pinctureLink)
       res.status(200).json({pictureLink: pinctureLink})
     })
 }
@@ -114,7 +114,7 @@ exports.svgComp = (req, res, tcomp) => {
       console.log('-------------')
       console.log('TERMINUS')
       const pinctureLink = `http://${ENV.host}:${ENV.port}/assets/${ENV.picturePrefix + req.file.filename}`
-      console.log('picktureLink : ', pinctureLink);
+      console.log('picktureLink : ', pinctureLink)
       res.status(200).json({pictureLink: pinctureLink})
     })
 }

@@ -20,7 +20,7 @@ app.use(express.json())
 app.use('/api/onepic', formatRoutes)
 
 //static serve
-  //picture compress
-  app.use('/assets', express.static(path.join(__dirname, ENV.folderPictureCompress)))
+//picture compress
+app.use('/assets', express.static(path.join(__dirname, ENV.folderPictureCompress)))
 
 module.exports = app
