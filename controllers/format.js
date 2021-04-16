@@ -2,7 +2,7 @@ const compress_images = require('compress-images')
 const ENV = require('../env')
 const OUTPUT_path = './comp-img/comp-'
 
-const LogFileReq = (req) => {
+const logFileReqReport = (req) => {
   if (ENV.mode === "development") {
     console.log('Process starting ...')
     console.log('req.file :', req.file)
@@ -11,6 +11,16 @@ const LogFileReq = (req) => {
     console.log('req.file.filename: ', req.file.filename)
     console.log('req.file.path :', req.file.path)
   }
+}
+
+const logCompressReport = (error, completed, statistic) => {
+  console.log('Rapport de compression :')
+            console.log('-------------')
+            console.log('erreur :', error)
+            console.log('achevé :', completed)
+            console.log('static :', statistic)
+            console.log('-------------')
+            console.log('TERMINUS')
 }
 
 const compressPicture = (req, res, tcomp) => {
@@ -50,13 +60,7 @@ const compressPicture = (req, res, tcomp) => {
           { svg: { engine:  mineTypePicture === "svg"? 'svgo': false, command: '--multipass' } },
           { gif: { engine: mineTypePicture === "gif"? 'gifsicle': false, command: ['--colors', tcomp, '--use-col=web'] } },
           function logg (error, completed, statistic) {
-            console.log('Rapport de compression :')
-            console.log('-------------')
-            console.log('erreur :', error)
-            console.log('achevé :', completed)
-            console.log('static :', statistic)
-            console.log('-------------')
-            console.log('TERMINUS')
+            logCompressReport(error, completed, statistic)
             const pinctureLink = `http://${ENV.host}:${ENV.port}/assets/${ENV.picturePrefix + req.file.filename}`
             console.log('picktureLink : ', pinctureLink)
             res.status(200).json({pictureLink: pinctureLink})
@@ -65,25 +69,25 @@ const compressPicture = (req, res, tcomp) => {
 
 exports.jpgComp = (req, res, tcomp) => {
   // log fichier entrée
-  LogFileReq(req)
+  logFileReqReport(req)
   compressPicture(req, res, tcomp)
 }
 
 exports.pngComp = (req, res, tcomp) => {
   // log fichier entrée
-  LogFileReq(req)
+  logFileReqReport(req)
   compressPicture(req, res, tcomp)
 }
 
 exports.gifComp = (req, res, tcomp) => {
   // log fichier entrée
-  LogFileReq(req)
+  logFileReqReport(req)
   compressPicture(req, res, tcomp)
 }
 
 exports.svgComp = (req, res, tcomp) => {
   // log fichier entrée
-  LogFileReq(req)
+  logFileReqReport(req)
   compressPicture(req, res, tcomp)
 }
 
