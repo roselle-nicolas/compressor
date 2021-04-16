@@ -13,104 +13,77 @@ const LogFileReq = (req) => {
   }
 }
 
+const compressPicture = (req, res, tcomp) => {
+        let mineTypePicture = "";
+
+        switch (req.file.mimetype) {
+          case 'image/jpg':
+            mineTypePicture = "jpg"
+            break;
+          case 'image/jpeg':
+            mineTypePicture = "jpg"
+            break;
+          case 'image/png':
+            mineTypePicture = "png"
+            break;
+          case 'image/gif':
+            mineTypePicture = 'gif'
+            break;
+          case 'image/svg':
+            mineTypePicture = 'svg'
+            break;
+          case 'image/svg+xml':
+            mineTypePicture = 'svg'
+            break;
+        
+          default:
+            break;
+        }
+        console.log("MINETYPE : ", req.file.mimetype);
+        console.log("MINETYPE : ", mineTypePicture);
+        let INPUT_path = './'+req.file.path
+        tcomp = req.body.rangeValue
+        console.log('input path :', INPUT_path)
+        compress_images( INPUT_path, OUTPUT_path, { compress_force: false, statistic: true, autoupdate: true }, false,
+          { jpg: { engine: mineTypePicture === "jpg"? 'mozjpeg': false, command: ['-quality', tcomp ] } },
+          { png: { engine:  mineTypePicture === "png"? 'pngquant': false, command: ['--quality=10-'+tcomp, '-o'] } },
+          { svg: { engine:  mineTypePicture === "svg"? 'svgo': false, command: '--multipass' } },
+          { gif: { engine: mineTypePicture === "gif"? 'gifsicle': false, command: ['--colors', tcomp, '--use-col=web'] } },
+          function logg (error, completed, statistic) {
+            console.log('Rapport de compression :')
+            console.log('-------------')
+            console.log('erreur :', error)
+            console.log('achevé :', completed)
+            console.log('static :', statistic)
+            console.log('-------------')
+            console.log('TERMINUS')
+            const pinctureLink = `http://${ENV.host}:${ENV.port}/assets/${ENV.picturePrefix + req.file.filename}`
+            console.log('picktureLink : ', pinctureLink)
+            res.status(200).json({pictureLink: pinctureLink})
+          })
+}
+
 exports.jpgComp = (req, res, tcomp) => {
   // log fichier entrée
   LogFileReq(req)
-  let INPUT_path = './'+req.file.path
-  tcomp = req.body.rangeValue
-  console.log('input path :', INPUT_path)
-  compress_images( INPUT_path, OUTPUT_path, { compress_force: false, statistic: true, autoupdate: true }, false,
-    { jpg: { engine: 'mozjpeg', command: ['-quality', tcomp ] } },
-    { png: { engine: false, command: ['--quality=10-'+tcomp, '-o'] } },
-    { svg: { engine: false, command: '--multipass' } },
-    { gif: { engine: false, command: ['--colors', tcomp, '--use-col=web'] } },
-    function logg (error, completed, statistic) {
-      console.log('Rapport de compression :')
-      console.log('-------------')
-      console.log('erreur :', error)
-      console.log('achevé :', completed)
-      console.log('static :', statistic)
-      console.log('-------------')
-      console.log('TERMINUS')
-      const pinctureLink = `http://${ENV.host}:${ENV.port}/assets/${ENV.picturePrefix + req.file.filename}`
-      console.log('picktureLink : ', pinctureLink)
-      res.status(200).json({pictureLink: pinctureLink})
-    })
+  compressPicture(req, res, tcomp)
 }
 
 exports.pngComp = (req, res, tcomp) => {
   // log fichier entrée
   LogFileReq(req)
-  let INPUT_path = './'+req.file.path
-  tcomp = req.body.rangeValue
-  console.log('input path :', INPUT_path)
-  compress_images( INPUT_path, OUTPUT_path, { compress_force: false, statistic: true, autoupdate: true }, false, 
-    { jpg: { engine: false, command: ['-quality', tcomp ] } },
-    { png: { engine: 'pngquant', command: ['--quality='+tcomp+'-100', '-o'] } },
-    { svg: { engine: false, command: '--multipass' } },
-    { gif: { engine: false, command: ['--colors', tcomp, '--use-col=web'] } },
-    function logg (error, completed, statistic) {
-      console.log('Rapport de compression :')
-      console.log('-------------')
-      console.log('erreur :', error)
-      console.log('achevé :', completed)
-      console.log('static :', statistic)
-      console.log('-------------')
-      console.log('TERMINUS')
-      const pinctureLink = `http://${ENV.host}:${ENV.port}/assets/${ENV.picturePrefix + req.file.filename}`
-      console.log('picktureLink : ', pinctureLink)
-      res.status(200).json({pictureLink: pinctureLink})
-    })
+  compressPicture(req, res, tcomp)
 }
 
 exports.gifComp = (req, res, tcomp) => {
   // log fichier entrée
   LogFileReq(req)
-  let INPUT_path = './'+req.file.path
-  tcomp = req.body.rangeValue
-  console.log('input path :', INPUT_path)
-  compress_images( INPUT_path, OUTPUT_path, { compress_force: false, statistic: true, autoupdate: true }, false,
-    { jpg: { engine: false, command: ['-quality', tcomp ] } },
-    { png: { engine: false, command: ['--quality=10-'+tcomp, '-o'] } },
-    { svg: { engine: false, command: '--multipass' } },
-    { gif: { engine: 'gifsicle', command: ['--colors', tcomp, '--use-col=web'] } },
-    
-    function logg (error, completed, statistic) {
-      console.log('Rapport de compression :')
-      console.log('-------------')
-      console.log('erreur :', error)
-      console.log('achevé :', completed)
-      console.log('static :', statistic)
-      console.log('-------------')
-      console.log('TERMINUS')
-      const pinctureLink = `http://${ENV.host}:${ENV.port}/assets/${ENV.picturePrefix + req.file.filename}`
-      console.log('picktureLink : ', pinctureLink)
-      res.status(200).json({pictureLink: pinctureLink})
-    })
+  compressPicture(req, res, tcomp)
 }
 
 exports.svgComp = (req, res, tcomp) => {
   // log fichier entrée
   LogFileReq(req)
-  let INPUT_path = './'+req.file.path
-  // tcomp = req.body.rangeValue
-  console.log('input path :', INPUT_path)
-  compress_images( INPUT_path, OUTPUT_path, { compress_force: false, statistic: true, autoupdate: true }, false,
-    { jpg: { engine: false, command: ['-quality', tcomp ] } },
-    { png: { engine: false, command: ['--quality=10-'+tcomp, '-o'] } },
-    { svg: { engine: 'svgo', command: '--multipass' } },
-    { gif: { engine: false, command: ['--colors', tcomp, '--use-col=web'] } },
-    function logg (error, completed, statistic) {
-      console.log('Rapport de compression :')
-      console.log('-------------')
-      console.log('erreur :', error)
-      console.log('achevé :', completed)
-      console.log('static :', statistic)
-      console.log('-------------')
-      console.log('TERMINUS')
-      const pinctureLink = `http://${ENV.host}:${ENV.port}/assets/${ENV.picturePrefix + req.file.filename}`
-      console.log('picktureLink : ', pinctureLink)
-      res.status(200).json({pictureLink: pinctureLink})
-    })
+  compressPicture(req, res, tcomp)
 }
 
