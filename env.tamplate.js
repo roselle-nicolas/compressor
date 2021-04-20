@@ -4,6 +4,6 @@ const ENV = {
     folderPictureCompress: "comp-img/comp-temp",
     host: "localhost",
     picturePrefix: "comp-"
-}
+};
 
-module.exports = ENV
+module.exports = ENV;
