@@ -2,6 +2,10 @@ const { compress } = require("compress-images/promise");
 const ENV = require("../env");
 const OUTPUT_path = "./comp-img/comp-";
 
+/**
+ * Fonction d'affichage des logs de la réception de la requête
+ * @param {Object} req - objet req de express contenat les fonctions pour manipuler la requête
+ */
 const logFileReqReport = (req) => {
     if (ENV.mode === "development") {
         console.log("Process starting ...");
@@ -23,6 +27,13 @@ const logFileReqReport = (req) => {
     console.log("TERMINUS");
 };
 */
+
+/**
+ * Fonction compress image en asynchrone utilisant le parametre onProgresse
+ * @param {Function} onProgress - fonction interne à compress_image pour gére l'asynchrone
+ * @param {Object} req - objet req de express contenat les fonctions pour manipuler la requête
+ * @param {String} tcomp - Taux de compression envoyé parle front parla variable rangeValue
+ */
 const asyncImages = async (onProgress, req, tcomp) => {
     let mineTypePicture = "";
 
@@ -73,25 +84,48 @@ asyncImages((req, res, error, statistic, completed) => {
     res.status(200).json({pictureLink: pinctureLink});
 });
 
-
+/**
+ * Fonction reçevant les image au format JPG et JPEG
+ * @param {Function} req 
+ * @param {Function} res 
+ * @param {String} tcomp 
+ */
 exports.jpgComp = (req, res, tcomp) => {
     // log fichier entrée
     logFileReqReport(req);
     asyncImages(req, res, tcomp);
 };
 
+/**
+ * Fonction reçevant les images au format PNG
+ * @param {Object} req 
+ * @param {Object} res 
+ * @param {String} tcomp 
+ */
 exports.pngComp = (req, res, tcomp) => {
     // log fichier entrée
     logFileReqReport(req);
     asyncImages(req, res, tcomp);
 };
 
+/**
+ * Fonction reçevant les images au format GIF
+ * @param {Object} req 
+ * @param {Object} res 
+ * @param {String} tcomp 
+ */
 exports.gifComp = (req, res, tcomp) => {
     // log fichier entrée
     logFileReqReport(req);
     asyncImages(req, res, tcomp);
 };
 
+/**
+ * 
+ * @param {Object} req 
+ * @param {Object} res 
+ * @param {String} tcomp 
+ */
 exports.svgComp = (req, res, tcomp) => {
     // log fichier entrée
     logFileReqReport(req);
