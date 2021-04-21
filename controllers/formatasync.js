@@ -37,10 +37,10 @@ const logFileReqReport = (req) => {
 /**
  * Fonction compress image en asynchrone utilisant le parametre onProgresse
  * @param {Function} onProgress - fonction interne à compress_image pour gére l'asynchrone
- * @param {Object} req - objet req de express contenat les fonctions pour manipuler la requête
- * @param {String} tcomp - Taux de compression envoyé parle front parla variable rangeValue
+ * @param {Object} req - objet req de express contenant les fonctions pour manipuler la requête
+ * @param {String} tcomp - Taux de compression envoyé par le front par la variable rangeValue
  */
-const asyncImages = async (onProgress, req, tcomp) => {
+const asyncImages = async (req, onProgress, tcomp) => {
     let mineTypePicture = "";
 
     switch (req.file.mimetype) {
@@ -68,6 +68,7 @@ const asyncImages = async (onProgress, req, tcomp) => {
     const result = await compress({
         source: "./"+req.file.path,
         destination: OUTPUT_path,
+        tcomp : req.body.rangeValue,
         onProgress,
         enginesSetup: {
             jpg: { engine: mineTypePicture === "jpg"? "mozjpeg": false, command: ["-quality", tcomp ] },
