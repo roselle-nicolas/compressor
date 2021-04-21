@@ -55,8 +55,8 @@ const compressPicture = (req, res, tcomp) => {
     console.log("input path :", INPUT_path);
     compress_images( INPUT_path, OUTPUT_path, { compress_force: false, statistic: true, autoupdate: true }, false,
         { jpg: { engine: mineTypePicture === "jpg"? "mozjpeg": false, command: ["-quality", tcomp ] } },
-        { png: { engine:  mineTypePicture === "png"? "pngquant": false, command: ["--quality=10-"+tcomp, "-o"] } },
-        { svg: { engine:  mineTypePicture === "svg"? "svgo": false, command: "--multipass" } },
+        { png: { engine: mineTypePicture === "png"? "pngquant": false, command: ["--quality=10-"+tcomp, "-o"] } },
+        { svg: { engine: mineTypePicture === "svg"? "svgo": false, command: "--multipass" } },
         { gif: { engine: mineTypePicture === "gif"? "gifsicle": false, command: ["--colors", tcomp, "--use-col=web"] } },
         function logg (error, completed, statistic) {
             logCompressReport(error, completed, statistic);

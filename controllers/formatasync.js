@@ -17,6 +17,12 @@ const logFileReqReport = (req) => {
     }
 };
 
+/**
+ * Fonction qui log toutes les étapes de la compression
+ * @param {Function} error - incluse dans la librairie compress_image renvoi les problèmes de compression
+ * @param {Function} completed - incluse dansq C_I  confirme que la compression est exécutée
+ * @param {Function} statistic - incluse dans C_I informe sur les étape de la compression
+ */
 /*const logCompressReport = (error, completed, statistic) => {
     console.log("Rapport de compression :");
     console.log("-------------");
@@ -25,8 +31,8 @@ const logFileReqReport = (req) => {
     console.log("static :", statistic);
     console.log("-------------");
     console.log("TERMINUS");
-};
-*/
+};*/
+
 
 /**
  * Fonction compress image en asynchrone utilisant le parametre onProgresse
