@@ -3,7 +3,7 @@ const ENV = require('../env')
 const OUTPUT_path = './comp-img/comp-'
 
 const logFileReqReport = (req) => {
-  if (ENV.mode === "development") {
+  if (ENV.showLog) {
     console.log('Process starting ...')
     console.log('req.file :', req.file)
     console.log('req.body :', req.body)
@@ -14,13 +14,15 @@ const logFileReqReport = (req) => {
 }
 
 const logCompressReport = (error, completed, statistic) => {
-  console.log('Rapport de compression :')
-            console.log('-------------')
-            console.log('erreur :', error)
-            console.log('achevé :', completed)
-            console.log('static :', statistic)
-            console.log('-------------')
-            console.log('TERMINUS')
+  if (ENV.showLog) {
+      console.log('Rapport de compression :')
+      console.log('-------------')
+      console.log('erreur :', error)
+      console.log('achevé :', completed)
+      console.log('static :', statistic)
+      console.log('-------------')
+      console.log('TERMINUS')
+  }
 }
 
 const compressPicture = (req, res, tcomp) => {
