@@ -1,9 +1,10 @@
 const compress_images = require("compress-images");
-const ENV = require("../env");
 const OUTPUT_path = "./comp-img/comp-";
 
+const ENV = process.env;
+
 const logFileReqReport = (req) => {
-    if (ENV.mode === "development") {
+    if (ENV.MODE === "development") {
         console.log("Process starting ...");
         console.log("req.file :", req.file);
         console.log("req.body :", req.body);
@@ -14,13 +15,15 @@ const logFileReqReport = (req) => {
 };
 
 const logCompressReport = (error, completed, statistic) => {
-    console.log("Rapport de compression :");
-    console.log("-------------");
-    console.log("erreur :", error);
-    console.log("achevé :", completed);
-    console.log("static :", statistic);
-    console.log("-------------");
-    console.log("TERMINUS");
+    if (ENV.MODE === "development") { 
+        console.log("Rapport de compression :");
+        console.log("-------------");
+        console.log("erreur :", error);
+        console.log("achevé :", completed);
+        console.log("static :", statistic);
+        console.log("-------------");
+        console.log("TERMINUS");
+    }
 };
 
 const compressPicture = (req, res, tcomp) => {
@@ -48,44 +51,48 @@ const compressPicture = (req, res, tcomp) => {
     default:
         break;
     }
-    console.log("MIMETYPE : ", req.file.mimetype);
-    console.log("MIMETYPE : ", mineTypePicture);
+    if (ENV.MODE === "development") { 
+        console.log("MIMETYPE : ", req.file.mimetype);
+        console.log("MIMETYPE : ", mineTypePicture);
+    }
     let INPUT_path = "./"+req.file.path;
     tcomp = req.body.rangeValue;
-    console.log("input path :", INPUT_path);
+    if (ENV.MODE === "development") { 
+        console.log("input path :", INPUT_path);
+    }
     compress_images( INPUT_path, OUTPUT_path, { compress_force: false, statistic: true, autoupdate: true }, false,
         { jpg: { engine: mineTypePicture === "jpg"? "mozjpeg": false, command: ["-quality", tcomp ] } },
         { png: { engine: mineTypePicture === "png"? "pngquant": false, command: ["--quality=10-"+tcomp, "-o"] } },
         { svg: { engine: mineTypePicture === "svg"? "svgo": false, command: "--multipass" } },
         { gif: { engine: mineTypePicture === "gif"? "gifsicle": false, command: ["--colors", tcomp, "--use-col=web"] } },
         function logg (error, completed, statistic) {
+            
             logCompressReport(error, completed, statistic);
-            const pinctureLink = `http://${ENV.host}:${ENV.port}/assets/${ENV.picturePrefix + req.file.filename}`;
-            console.log("picktureLink : ", pinctureLink);
+            const pinctureLink = `http://${ENV.HOST}:${ENV.PORT}/assets/${ENV.PICTURE_PREFIX + req.file.filename}`;
+
+            if (ENV.MODE === "development") {
+                console.log("picktureLink : ", pinctureLink);
+            }
             res.status(200).json({pictureLink: pinctureLink});
         });
 };
 
 exports.jpgComp = (req, res, tcomp) => {
-    // log fichier entrée
     logFileReqReport(req);
     compressPicture(req, res, tcomp);
 };
 
 exports.pngComp = (req, res, tcomp) => {
-    // log fichier entrée
     logFileReqReport(req);
     compressPicture(req, res, tcomp);
 };
 
 exports.gifComp = (req, res, tcomp) => {
-    // log fichier entrée
     logFileReqReport(req);
     compressPicture(req, res, tcomp);
 };
 
 exports.svgComp = (req, res, tcomp) => {
-    // log fichier entrée
     logFileReqReport(req);
     compressPicture(req, res, tcomp);
 };

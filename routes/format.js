@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const multer = require("../middlewares/multer-config");
 // const formatCtrl = require("../controllers/format")
-const formatCtrl = require("../controllers/formatasync");
+const formatCtrl = require("../controllers/format");
  
 
 router.post("/jpg/", multer, formatCtrl.jpgComp);

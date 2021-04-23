@@ -1,9 +1,9 @@
 const express = require("express");
 const path = require("path");
-const ENV = require("./env");
 // route export module
 const formatRoutes = require("./routes/format");
 
+const ENV = process.env;
 
 const app = express();
 
@@ -22,6 +22,6 @@ app.use("/api/onepic", formatRoutes);
 //static serve
 //picture compress
 // eslint-disable-next-line no-undef
-app.use("/assets", express.static(path.join(__dirname, ENV.folderPictureCompress)));
+app.use("/assets", express.static(path.join(__dirname, ENV.FOLDER_PIC_COMPRESS)));
 
 module.exports = app;
