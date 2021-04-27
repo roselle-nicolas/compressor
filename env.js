@@ -3,7 +3,7 @@ const ENV = {
     port: 3333,
     folderPictureCompress: "comp-img/comp-temp",
     host: "localhost",
-    picturePrefix: "comp-"
+    picturePrefix: "",
 };
 
 module.exports = ENV;
