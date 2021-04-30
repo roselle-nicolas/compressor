@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 // route export module
 const formatRoutes = require("./routes/format");
+const handleImagesRoutes = require("./routes/handleImages");
 
 const ENV = process.env;
 
@@ -16,12 +17,21 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
-//route API
-app.use("/api/onepic", formatRoutes);
+//*** START ROUTE API
 
-//static serve
+//format
+app.use("/api/onepic", formatRoutes);
+//handleImages
+app.use("/api/handleImages", handleImagesRoutes);
+
+//ROUTE API FINISH***
+
+
+// *** START STATIC SERVE
+
 //picture compress
-// eslint-disable-next-line no-undef
 app.use("/assets", express.static(path.join(__dirname, ENV.FOLDER_PIC_COMPRESS)));
+
+// STATIC SERVE FINISH ***
 
 module.exports = app;

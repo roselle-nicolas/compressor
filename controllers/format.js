@@ -73,7 +73,7 @@ const compressPicture = (req, res, tcomp) => {
             if (ENV.MODE === "development") {
                 console.log("picktureLink : ", pinctureLink);
             }
-            res.status(200).json({pictureLink: pinctureLink});
+            res.status(200).json({pictureLink: pinctureLink, filename : req.file.filename});
         });
 };
 
