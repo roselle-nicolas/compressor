@@ -27,6 +27,7 @@ const logCompressReport = (error, completed, statistic) => {
 };
 
 const compressPicture = (req, res, tcomp) => {
+    res.status(200).json({response: "traitement en cour..."});
     let mineTypePicture = "";
 
     switch (req.file.mimetype) {
@@ -73,7 +74,8 @@ const compressPicture = (req, res, tcomp) => {
             if (ENV.MODE === "development") {
                 console.log("picktureLink : ", pinctureLink);
             }
-            res.status(200).json({pictureLink: pinctureLink, filename : req.file.filename});
+            // envoie de l'url par web socket
+            // res.status(200).json({pictureLink: pinctureLink, filename : req.file.filename});
         });
 };
 
