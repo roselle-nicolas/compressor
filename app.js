@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 // route export module
 const formatRoutes = require("./routes/format");
+const formatSocketRoutes = require("./routes/formatSocket");
 const handleImagesRoutes = require("./routes/handleImages");
 
 const ENV = process.env;
@@ -21,6 +22,8 @@ app.use(express.json());
 
 //format
 app.use("/api/onepic", formatRoutes);
+//formatSocket
+app.use("/api/onepic/multi", formatSocketRoutes);
 //handleImages
 app.use("/api/handleImages", handleImagesRoutes);
 
