@@ -3,6 +3,14 @@ const OUTPUT_path = "./comp-img/comp-";
 
 const ENV = process.env;
 
+let AllCompressPictures = {};
+
+
+exports.addCompressPicture = (compressPicturesId, dataCompressPictures) => {
+    AllCompressPictures[compressPicturesId] = dataCompressPictures;
+    // AllCompressPictures[dataId].client.emit("test");
+};
+
 const logFileReqReport = (req) => {
     if (ENV.MODE === "development") {
         console.log("Process starting ...");
@@ -27,7 +35,9 @@ const logCompressReport = (error, completed, statistic) => {
 };
 
 const compressPicture = (req, res, tcomp) => {
-    res.status(200).json({response: "traitement en cour..."});
+    const compressPictureId = req.body.compressPictureId;
+
+    res.status(200).json({response: `compression de l'image: ${req.file.filename} en cour...`});
     let mineTypePicture = "";
 
     switch (req.file.mimetype) {
@@ -74,8 +84,24 @@ const compressPicture = (req, res, tcomp) => {
             if (ENV.MODE === "development") {
                 console.log("picktureLink : ", pinctureLink);
             }
+
+
             // envoie de l'url par web socket
+            AllCompressPictures[compressPictureId].client.emit("conpressOnePictureFinish", JSON.stringify(pinctureLink));
+
+            //ancienne version format.js
             // res.status(200).json({pictureLink: pinctureLink, filename : req.file.filename});
+
+            //décrémenter le nombre d'image restant à compresser
+            AllCompressPictures[compressPictureId].numberOfPictures -= 1;
+            console.log("NOMBRE RESTANT D IMAGE A COMPRESSER", AllCompressPictures[compressPictureId].numberOfPictures);
+            if (AllCompressPictures[compressPictureId].numberOfPictures <= 0) {
+                AllCompressPictures[compressPictureId].client.emit("compressAllPicturesFinish");
+
+                // désabonnement du web socket
+
+            }
+
         });
 };
 

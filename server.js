@@ -10,3 +10,13 @@ const server = http.createServer(app);
 console.log(`Connecté au port ${process.env.PORT}`);
 
 server.listen( process.env.PORT);
+
+// soket.io
+const io = require("socket.io")(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"]
+    }
+});
+const { start } = require("./socket.io");
+start(io);
