@@ -1,6 +1,8 @@
 const compress_images = require("compress-images");
 const OUTPUT_path = "./comp-img/comp-";
 
+
+// eslint-disable-next-line no-undef
 const ENV = process.env;
 
 const logFileReqReport = (req) => {
