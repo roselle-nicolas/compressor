@@ -12,8 +12,6 @@ exports.start = (io) => {
         client.on("startCompressFiles", (compressPictureData) => {
             const dataReceived = JSON.parse(compressPictureData);
 
-            console.log("socket recu", dataReceived);
-
             const compressPictureId = Date.now();
 
             const dataCompressPictures = {
@@ -21,8 +19,10 @@ exports.start = (io) => {
                 client: dataSocketClient
             };
 
+            // sauvegarde des infos de la demande de compression d'images
             formatSocketCtrl.addCompressPicture(compressPictureId, dataCompressPictures);
 
+            //envoie de l'identifiant de l'opération de compression d'un utilisateur.
             const dataSent = {compressPictureId};
             client.emit("startCompressFiles", JSON.stringify(dataSent));
         });          

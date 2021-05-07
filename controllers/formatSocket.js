@@ -8,7 +8,6 @@ let AllCompressPictures = {};
 
 exports.addCompressPicture = (compressPicturesId, dataCompressPictures) => {
     AllCompressPictures[compressPicturesId] = dataCompressPictures;
-    // AllCompressPictures[dataId].client.emit("test");
 };
 
 const logFileReqReport = (req) => {
@@ -98,7 +97,7 @@ const compressPicture = (req, res, tcomp) => {
             if (AllCompressPictures[compressPictureId].numberOfPictures <= 0) {
                 AllCompressPictures[compressPictureId].client.emit("compressAllPicturesFinish");
 
-                // désabonnement du web socket
+                // A FAIRE: désabonnement du web socket
 
             }
 
