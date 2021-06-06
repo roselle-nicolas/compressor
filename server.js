@@ -1,6 +1,7 @@
 if (process.env.NODE_ENV !== "production") {
     require("dotenv").config();
 }
+require("dotenv").config();
 const http = require("http");
 const app = require("./app");
 // const ENV = require("./env");
