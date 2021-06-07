@@ -1,13 +1,23 @@
 const express = require("express");
+const mongoose = require('mongoose');
 const path = require("path");
-// route export module
+// route
 const formatRoutes = require("./routes/format");
 const formatSocketRoutes = require("./routes/formatSocket");
 const handleImagesRoutes = require("./routes/handleImages");
+const userRoutes = require("./routes/auth");
 
 const ENV = process.env;
 
 const app = express();
+
+mongoose.connect(ENV.connectMongoose,
+    { useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true
+     })
+    .then(() => console.log('Connexion à MongoDB réussie !'))
+    .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -20,6 +30,8 @@ app.use(express.json());
 
 //*** START ROUTE API
 
+//auth
+app.use('/api/auth', userRoutes);
 //format
 app.use("/api/onepic", formatRoutes);
 //formatSocket
