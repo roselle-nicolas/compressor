@@ -97,8 +97,9 @@ const compressPicture = (req, res, tcomp) => {
             if (AllCompressPictures[compressPictureId].numberOfPictures <= 0) {
                 AllCompressPictures[compressPictureId].client.emit("compressAllPicturesFinish");
 
-                // A FAIRE: désabonnement du web socket
-
+                // désabonnement web socket
+                AllCompressPictures[compressPictureId].client.disconnect(true);
+                //https://www.it-swarm-fr.com/fr/javascript/node.js-socket.io-ferme-la-connexion-client/1040796505/
             }
 
         });
