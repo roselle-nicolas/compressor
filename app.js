@@ -6,6 +6,7 @@ const formatRoutes = require("./routes/format");
 const formatSocketRoutes = require("./routes/formatSocket");
 const handleImagesRoutes = require("./routes/handleImages");
 const userRoutes = require("./routes/auth");
+const repositoryRoutes = require("./routes/repository");
 
 const ENV = process.env;
 
@@ -38,6 +39,8 @@ app.use("/api/onepic", formatRoutes);
 app.use("/api/onepic/multi", formatSocketRoutes);
 //handleImages
 app.use("/api/handleImages", handleImagesRoutes);
+// repository
+app.use("/api/repository", repositoryRoutes);
 
 //ROUTE API FINISH***
 
