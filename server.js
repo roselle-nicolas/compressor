@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV !== "production") {
     require("dotenv").config();
 }
-require("dotenv").config();
+
 const http = require("http");
 const app = require("./app");
 // const ENV = require("./env");
@@ -12,12 +12,8 @@ console.log(`Connecté au port ${process.env.PORT}`);
 
 server.listen( process.env.PORT);
 
-// soket.io
-const io = require("socket.io")(server, {
-    cors: {
-        origin: "*",
-        methods: ["GET", "POST"]
-    }
-});
-const { start } = require("./socket.io");
-start(io);
+const WebSocket = require("ws");
+const wss = new WebSocket.Server({ port: 3334 });
+const { connection } = require("./webSocket/ws-connection");
+
+connection(wss);
