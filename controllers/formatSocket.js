@@ -35,7 +35,7 @@ const logCompressReport = (error, completed, statistic) => {
 
 const compressPicture = (req, res, tcomp) => {
     const compressPictureId = req.body.compressPictureId;
-
+    
     res.status(200).json({response: `compression de l'image: ${req.file.filename} en cour...`});
     let mineTypePicture = "";
 
@@ -70,39 +70,44 @@ const compressPicture = (req, res, tcomp) => {
     if (ENV.MODE === "development") { 
         console.log("input path :", INPUT_path);
     }
-    compress_images( INPUT_path, OUTPUT_path, { compress_force: false, statistic: true, autoupdate: true }, false,
+    compress_images( INPUT_path, OUTPUT_path, { compress_force: true, statistic: true, autoupdate: true }, false,
         { jpg: { engine: mineTypePicture === "jpg"? "mozjpeg": false, command: ["-quality", tcomp ] } },
         { png: { engine: mineTypePicture === "png"? "pngquant": false, command: ["--quality=10-"+tcomp, "-o"] } },
         { svg: { engine: mineTypePicture === "svg"? "svgo": false, command: "--multipass" } },
         { gif: { engine: mineTypePicture === "gif"? "gifsicle": false, command: ["--colors", tcomp, "--use-col=web"] } },
-        function logg (error, completed, statistic) {
+        function(error, completed, statistic) {
             
             logCompressReport(error, completed, statistic);
-            const pinctureLink = `http://${ENV.HOST}:${ENV.PORT}/assets/${ENV.PICTURE_PREFIX + req.file.filename}`;
+            
 
-            if (ENV.MODE === "development") {
-                console.log("picktureLink : ", pinctureLink);
+            
+
+            if (completed) {
+                // Doing something.
             }
-
-
-            // envoie de l'url par web socket
-            AllCompressPictures[compressPictureId].client.emit("conpressOnePictureFinish", JSON.stringify(pinctureLink));
-
-            //ancienne version format.js
-            // res.status(200).json({pictureLink: pinctureLink, filename : req.file.filename});
-
-            //décrémenter le nombre d'image restant à compresser
-            AllCompressPictures[compressPictureId].numberOfPictures -= 1;
-            console.log("NOMBRE RESTANT D IMAGE A COMPRESSER", AllCompressPictures[compressPictureId].numberOfPictures);
-            if (AllCompressPictures[compressPictureId].numberOfPictures <= 0) {
-                AllCompressPictures[compressPictureId].client.emit("compressAllPicturesFinish");
-
-                // désabonnement web socket
-                AllCompressPictures[compressPictureId].client.disconnect(true);
-                //https://www.it-swarm-fr.com/fr/javascript/node.js-socket.io-ferme-la-connexion-client/1040796505/
+            if (!error) {
+                const pinctureLink = `http://${ENV.HOST}:${ENV.PORT}/assets/${ENV.PICTURE_PREFIX + req.file.filename}`;
+                if (ENV.MODE === "development") {
+                    console.log("picktureLink : ", pinctureLink);
+                }
+                // envoie de l'url par web socket
+                const data = {conpressOnePictureFinish: {pinctureLink}};
+                console.log("compressPictureid:", compressPictureId);
+                AllCompressPictures[compressPictureId].ws.send(JSON.stringify(data));
+                //décrémenter le nombre d'image restant à compresser
+                AllCompressPictures[compressPictureId].numberOfPictures -= 1;
+                console.log("NOMBRE RESTANT D IMAGE A COMPRESSER", AllCompressPictures[compressPictureId].numberOfPictures);
+                if (AllCompressPictures[compressPictureId].numberOfPictures <= 0) {
+                    AllCompressPictures[compressPictureId].ws.send(JSON.stringify({compressAllPicturesFinish: true}));
+                }
             }
+                
 
-        });
+
+            
+
+        }
+    );
 };
 
 exports.jpgComp = (req, res, tcomp) => {
