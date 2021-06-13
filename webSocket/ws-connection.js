@@ -7,8 +7,10 @@ exports.connection = (wss) => {
     wss.on("connection", (ws) => {
         console.log("[websocket]: connexion client");
         ws.on("message", (data) => {
+            //webSocket: reception de toutes les données envoyées par le client
             const newData = JSON.parse(data);
-            // début des opération de compression: "startCompressFiles"
+            // données dispaché:
+            // "startCompressFiles": demande d'une opération de compression d'images: 
             newData.startCompressFiles? startCompressFiles(newData.startCompressFiles, ws): false;
         });
         ws.on("close", (e) => {
