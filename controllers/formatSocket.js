@@ -84,10 +84,10 @@ const compressPicture = (currentOperation, compressRatio, file) => {
 
             if (!error) {
                 // hébergement serveur static: 
-                const pinctureLink = `http://${ENV.HOST}:${ENV.PORT}/assets/${ENV.PICTURE_PREFIX + filename}`;
+                const pirtureUrl = `http://${ENV.HOST}:${ENV.PORT}/assets/${ENV.PICTURE_PREFIX + filename}`;
 
                 // websocket: envoie client: image compréssé terminé: url
-                const data = {conpressOnePictureFinish: {pinctureLink}};
+                const data = {conpressOnePictureFinish: {pirtureUrl, name: filename}};
                 currentOperation.ws.send(JSON.stringify(data));
                 //décrémenter le nombre d'image restant à compresser
                 currentOperation.numberOfRemainigPicture -= 1;
