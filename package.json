@@ -24,6 +24,7 @@
   "homepage": "https://github.com/DevonTheFloor/compressor#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "compress-images": "^1.9.8",
     "express": "^4.17.1",
     "gifsicle": "^5.2.0",
     "http": "0.0.1-security",
@@ -32,10 +33,9 @@
     "mongoose": "^5.12.13",
     "mongoose-unique-validator": "^2.0.3",
     "pngquant-bin": "^6.0.0",
-    "socket.io": "^4.0.2"
+    "ws": "^7.4.6"
   },
   "devDependencies": {
-    "compress-images": "^1.9.8",
     "dotenv": "^8.2.0",
     "eslint": "^7.21.0",
     "jsdoc": "^3.6.6",

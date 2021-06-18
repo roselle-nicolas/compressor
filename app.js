@@ -32,7 +32,7 @@ app.use(express.json());
 //*** START ROUTE API
 
 //auth
-app.use('/api/auth', userRoutes);
+app.use("/api/auth", userRoutes);
 //format
 app.use("/api/onepic", formatRoutes);
 //formatSocket
