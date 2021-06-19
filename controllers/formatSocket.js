@@ -4,7 +4,6 @@ const ENV = process.env;
 
 let AllCompressPictures = {};
 
-
 exports.addCompressPicture = (compressPicturesId, dataCompressPictures) => {
     AllCompressPictures[compressPicturesId] = dataCompressPictures;
 };
@@ -14,7 +13,7 @@ const logFileReqReport = (req) => {
         console.log("Process starting ...");
         console.log("req.file :", req.file);
         console.log("req.body :", req.body);
-        console.log("T comp :", req.body.rangeValue);
+        console.log("T comp :", req.body.compressRatio);
         console.log("req.file.filename: ", req.file.filename);
         console.log("req.file.path :", req.file.path);
     }
