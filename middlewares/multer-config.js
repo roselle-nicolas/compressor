@@ -5,16 +5,18 @@ const MIME_TYPES = {
     "image/jpeg": "jpg",
     "image/png": "png",
     "image/gif": "gif",
-    "image/svg": "svg"
+    "image/svg": "svg",
+    "image/svg+xml": "svg",
 };
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
         callback(null, "temp");
     },
     filename: (req, file, callback) => {
+        console.log("file.mimetype", file.mimetype);
         const extension = MIME_TYPES[file.mimetype];
         console.log("ext : ", extension);
-        let name = file.originalname; // .split(' ').join('_') 
+        let name = file.originalname.split(" ").join("-");
         callback(null, Date.now()+"-"+name);
     }
 });
