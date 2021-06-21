@@ -16,8 +16,14 @@ const storage = multer.diskStorage({
         console.log("file.mimetype", file.mimetype);
         const extension = MIME_TYPES[file.mimetype];
         console.log("ext : ", extension);
+        // suppression des espaces
         let name = file.originalname.split(" ").join("-");
-        callback(null, Date.now()+"-"+name);
+        //supression  de l'extetion 
+        name = name.split(".");
+        name.pop();
+        // restructuration
+        name = name.join();
+        callback(null, name + "-" + Date.now() + "." + extension);
     }
 });
 
