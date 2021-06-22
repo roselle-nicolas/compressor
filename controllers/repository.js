@@ -11,11 +11,27 @@ exports.getAll = (req, res) => {
         });
 
 };
+exports.getRepositorySelected = (req, res) => {
+    console.log('ok', req.body);
+    Repo
+        .find({
+            user_id: req.body.user_id,
+            repository_parent_id: req.body.repository_parent_id,
+            project_id: null
+        })
+        .then((repos) => {
+            res.status(200).json(repos);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+
+};
 
 exports.getOne = (req, res) => {
     Repo
         .findOne({
-            id: req.params._id
+            _id: req.params._id
         })
         .then((repo) => {
             res.status(200).json(repo);
@@ -25,13 +41,14 @@ exports.getOne = (req, res) => {
 };
 
 exports.create = (req, res) => {
+    console.log(req.body);
     const repository = new Repo({
         ...req.body
     });
     repository
         .save()
         .then(() => {
-            res.status(201).json({message: "Repository created"});
+            res.status(201).json({repository});
         })
         .catch((error) => {
             console.error(error);

@@ -84,7 +84,7 @@ exports.getUser = (req, res) => {
                 return res.status(401).json({ message: "Utilisateur non trouvé !" });
             }else {
                 res.status(200).json({
-                    userId: user._id,
+                    id: user._id,
                     pseudo: user.pseudo,
                     email: user.email,
                 });
