@@ -1,4 +1,14 @@
 const fs = require("fs");
+const Picture = require("../models/picture");
+
+exports.createPicture = (req, res) => {
+    const picture = new Picture({
+        ...req.body
+    });
+    picture.save()
+        .then(() => res.status(201).json({picture}))
+        .catch(error => res.status(500).json({ error }));
+};
 
 exports.deletePicture = (req, res) => {
     const filename = req.params.filename;
