@@ -12,12 +12,11 @@ exports.getAll = (req, res) => {
 
 };
 exports.getRepositorySelected = (req, res) => {
-    console.log('ok', req.body);
     Repo
         .find({
             user_id: req.body.user_id,
             repository_parent_id: req.body.repository_parent_id,
-            project_id: null
+            project_id: req.body.project_id
         })
         .then((repos) => {
             res.status(200).json(repos);
@@ -29,9 +28,10 @@ exports.getRepositorySelected = (req, res) => {
 };
 
 exports.getOne = (req, res) => {
+    const _idValue = req.params._id === "_null"? null : req.params._id;
     Repo
         .findOne({
-            _id: req.params._id
+            _id: _idValue
         })
         .then((repo) => {
             res.status(200).json(repo);
@@ -41,7 +41,6 @@ exports.getOne = (req, res) => {
 };
 
 exports.create = (req, res) => {
-    console.log(req.body);
     const repository = new Repo({
         ...req.body
     });
