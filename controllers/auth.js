@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+// eslint-disable-next-line no-undef
 const ENV = process.env;
 
 exports.singup = (req, res) => {

@@ -8,6 +8,7 @@ const pictuereRoutes = require("./routes/picture");
 const userRoutes = require("./routes/auth");
 const repositoryRoutes = require("./routes/repository");
 
+// eslint-disable-next-line no-undef
 const ENV = process.env;
 
 const app = express();
@@ -49,6 +50,7 @@ app.use("/api/repository", repositoryRoutes);
 // *** START STATIC SERVE
 
 //picture compress
+// eslint-disable-next-line no-undef
 app.use("/assets", express.static(path.join(__dirname, ENV.FOLDER_PIC_COMPRESS)));
 
 // STATIC SERVE FINISH ***

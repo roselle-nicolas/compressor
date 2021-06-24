@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+// eslint-disable-next-line no-undef
 const ENV = process.env;
 
 module.exports = (req, res, next) => {
