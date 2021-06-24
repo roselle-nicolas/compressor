@@ -7,7 +7,9 @@ const pictureSchema = mongoose.Schema({
     name         : { type: String, required: true },
     url          : { type: String, required: true, inique: true },
     operation_id : { type: String, required: true},
-    size         : { type: Number },
+    size_in: { type: Number },
+    size_output: { type: Number },
+    percent: { type: Number },
 });
 
 pictureSchema.plugin(uniqueValidator);
