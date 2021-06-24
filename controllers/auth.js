@@ -42,7 +42,6 @@ exports.login = (req, res) => {
                 if (!valid) {
                     return res.status(401).json({ message: "Mot de passe incorrect !" });
                 }
-                console.log("admin : user", user);
                 res.status(200).json({
                     userId: user._id,
                     pseudo: user.pseudo,

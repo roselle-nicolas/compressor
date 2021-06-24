@@ -9,6 +9,7 @@ const pictureSchema = mongoose.Schema({
     operation_id : { type: String, required: true},
     size_in: { type: Number },
     size_output: { type: Number },
+    compressRatio: { type: Number },
     percent: { type: Number },
 });
 

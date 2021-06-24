@@ -25,10 +25,13 @@ exports.getPicturesSelected = (req, res) => {
 };
 
 exports.modify = (req, res) => {
-    Picture.updateOne({
-        _id: req.body._id,
-        ...req.body
-    })
+    Picture.updateOne(
+        { _id: req.params._id },
+        {
+            ...req.body,
+            _id: req.params._id
+        }
+    )
         .then((picture) => res.status(201).json({ picture }))
         .catch((error) => res.status(500).json({ error }));
 };
