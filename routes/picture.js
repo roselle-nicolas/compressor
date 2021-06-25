@@ -6,6 +6,6 @@ const auth = require("../middlewares/auth");
 router.post("/", auth, pictureCtrl.createPicture);
 router.post("/selected/",auth, pictureCtrl.getPicturesSelected);
 router.put("/:_id", auth, pictureCtrl.modify);
-router.delete("/:filename",auth, pictureCtrl.deletePicture);
+router.delete("/:_id",auth, pictureCtrl.deletePicture);
 
 module.exports = router;

@@ -62,17 +62,16 @@ const getExtentionFile = (mimetype) => {
 
 const createDataPicture = ( newPicture ) => {
     return newPicture.save()
-        .then(() => console.log("savegarde data picture après le download d'une image !"))
+        .then(() => console.log("savegarde des données d'une nouvelle image"))
         .catch(error => console.log(error));
 };
 
 const updateDataPicture = (option) => {
-    console.log("option", option);
     Picture.updateOne(
         {_id: option._id},
         {...option},
     )
-        .then(() => console.log("mise à jour data picture après compression d'une image"))
+        .then(() => console.log("mise à jour des données d'une image"))
         .catch(error => console.log(error));
 
 };
@@ -111,7 +110,6 @@ const compressPicture = (currentOperation, compressRatio, file, dataPicture) => 
                     size_output: statistic.size_output,
                     percent: statistic.percent,
                 };
-                console.log("newDataPicture", newDataPicture);
                 //mise à jour de la base de données
                 updateDataPicture(newDataPicture);
 

@@ -37,14 +37,28 @@ exports.modify = (req, res) => {
 };
 
 exports.deletePicture = (req, res) => {
-    const filename = req.params.filename;
-    // suppression de l'image compressé
+    // récupérer les infos de l'image
+    Picture.findOne({ _id: req.params._id}).then(
+        dataPicture => {
+            deletePicturefile(dataPicture, res);
+        }
+    ).catch();
+
+    
+};
+
+const deletePicturefile = (dataPicture, res) => {
     // eslint-disable-next-line no-undef
-    fs.unlink(`${process.env.FOLDER_PIC_COMPRESS}/${process.env.PICTURE_PREFIX + filename}`, (error) => {
+    const pathCompressPicture = `${process.env.FOLDER_PIC_COMPRESS}/${process.env.PICTURE_PREFIX + dataPicture.name}`;
+    const pathDownloadPicture = `temp/${dataPicture.name}`;
+    
+    // suppression de l'image compressé
+    fs.unlink(pathCompressPicture, (error) => {
         if (!error) {
             // puis suppression de l'image d'origine
-            fs.unlink(`temp/${filename}`, () => {
+            fs.unlink(pathDownloadPicture, () => {
                 if (!error) {
+                    deleteDataPicture(dataPicture);
                     res.status(200).json({ message : "image supprimé avec succès !"});
                 }else {
                     res.status(400).json({ error });
@@ -54,4 +68,12 @@ exports.deletePicture = (req, res) => {
             res.status(400).json({ error });
         }
     });
+};
+const deleteDataPicture = (dataPicture) => {
+    console.log("effacement des données d'une image");
+    Picture.deleteOne({_id: dataPicture._id}).then(
+        response => console.log({response})
+    ).catch(
+        error => console.log({error})
+    );
 };
