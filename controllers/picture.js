@@ -32,7 +32,7 @@ exports.modify = (req, res) => {
             _id: req.params._id
         }
     )
-        .then((picture) => res.status(201).json({ picture }))
+        .then((response) => res.status(201).json({ response }))
         .catch((error) => res.status(500).json({ error }));
 };
 
@@ -69,6 +69,7 @@ const deletePicturefile = (dataPicture, res) => {
         }
     });
 };
+
 const deleteDataPicture = (dataPicture) => {
     console.log("effacement des données d'une image");
     Picture.deleteOne({_id: dataPicture._id}).then(
