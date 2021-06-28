@@ -11,20 +11,31 @@ exports.createPicture = (req, res) => {
 };
 
 exports.getPicturesSelected = (req, res) => {
-
-    const repository_id = req.body.repository_id === "_null"? null : req.body.repository_id;
-    const operation_id = req.body.operation_id === "_null"? null : req.body.operation_id;
+    console.log(req.body.user_id, req.body.repository_id);
 
     Picture.find({ 
         user_id: req.body.user_id,
-        repository_id,
-        operation_id
+        repository_id: req.body.repository_id,
     })
-        .then(pictures => res.status(200).json({ pictures }))
+        .then(pictures => res.status(200).json(pictures))
         .catch(error => res.status(500).json({ error }) );
 };
 
 exports.modify = (req, res) => {
+    Picture.findOne({ _id: req.params._id })
+        .then(picture => {
+            //suppression de l'image iriginale téléchargé si l'image est traité pour la première fois.
+            if (picture) {
+                if (req.body.operation_id === "_null" && req.body.operation_id !== picture.operation_id) {
+                    fs.unlink(`temp/${picture.name}`, () => {
+                        console.log(`effacement de: temp/${picture.name}`);
+                    });
+                }
+            }
+        })
+        .catch(error => console.log(error));
+
+    
     Picture.updateOne(
         { _id: req.params._id },
         {
