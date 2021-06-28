@@ -145,7 +145,7 @@ const downloadPicture = (req, res) => {
 
     const dataPicture = {
         user_id      : req.body.user_id,
-        repository_id: "_null",
+        repository_id: "_undefined",
         name         : req.file.filename,
         url          : "_null",
         operation_id : compressPictureId,
