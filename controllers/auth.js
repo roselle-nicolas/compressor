@@ -55,13 +55,16 @@ exports.login = (req, res) => {
             })
             .catch(error => res.status(500).json(error));
     };
-    
+    console.log(req.body.username);
     User.findOne({ pseudo: req.body.username})
         .then(user => {
             if (!user) {
-                User.findOne({ email: req.body.userName})
+                console.log("recherche avec un email");
+                User.findOne({ email: req.body.username})
                     .then(user => {
+                        console.log(user);
                         if(!user) {
+                            console.log("pas de corespondance");
                             return res.status(401).json({ message: "Utilisateur non trouvé !" });
                         }else {
                             bcriptCompare(user);
