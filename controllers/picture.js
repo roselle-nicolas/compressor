@@ -1,12 +1,14 @@
+const { response } = require("express");
 const fs = require("fs");
 const Picture = require("../models/picture");
 
 exports.createPicture = (req, res) => {
+    console.log(req.body);
     const picture = new Picture({
         ...req.body,
     });
     picture.save()
-        .then(() => res.status(201).json({picture}))
+        .then(() => res.status(201).json(picture))
         .catch(error => res.status(500).json({ error }));
 };
 
@@ -49,16 +51,29 @@ exports.modify = (req, res) => {
 
 exports.deletePicture = (req, res) => {
     // récupérer les infos de l'image
-    Picture.findOne({ _id: req.params._id}).then(
-        dataPicture => {
-            deletePicturefile(dataPicture, res);
-        }
-    ).catch();
-
-    
+    Picture.findOne({ _id: req.params._id})
+        .then(
+            dataPicture => {
+                // plusieurs dataPicture avec la même url?. cela peut arriver si l'image a été copiée dans l'application?
+                Picture.find({ url: dataPicture.url })
+                    .then(
+                        dataPictures => {
+                            if (dataPictures.length > 1) {
+                                // efface selement les données de l'image et non le fichier
+                                deleteDataPicture(dataPicture, res);
+                            }else {
+                                deletePicturefile(dataPicture, res);
+                            }
+                        }
+                    )
+                    .catch();
+            }
+        )
+        .catch(error => res.status(500).json({ error }));
 };
 
 const deletePicturefile = (dataPicture, res) => {
+    console.log("effacement du fichier de l'image");
     // eslint-disable-next-line no-undef
     const pathCompressPicture = `${process.env.FOLDER_PIC_COMPRESS}/${process.env.PICTURE_PREFIX + dataPicture.name}`;
     const pathDownloadPicture = `temp/${dataPicture.name}`;
@@ -69,23 +84,24 @@ const deletePicturefile = (dataPicture, res) => {
             // puis suppression de l'image d'origine
             fs.unlink(pathDownloadPicture, () => {
                 if (!error) {
-                    deleteDataPicture(dataPicture);
-                    res.status(200).json({ message : "image supprimé avec succès !"});
+                    deleteDataPicture(dataPicture, res);
+                    
                 }else {
                     res.status(400).json({ error });
                 }
             });
         }else {
             res.status(400).json({ error });
+            return;
         }
     });
 };
 
-const deleteDataPicture = (dataPicture) => {
+const deleteDataPicture = (dataPicture, res) => {
     console.log("effacement des données d'une image");
     Picture.deleteOne({_id: dataPicture._id}).then(
-        response => console.log({response})
+        response => res.status(200).json({ response })
     ).catch(
-        error => console.log({error})
+        error => res.status(400).json({ error })
     );
 };
