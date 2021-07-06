@@ -1,9 +1,7 @@
-const { response } = require("express");
 const fs = require("fs");
 const Picture = require("../models/picture");
 
 exports.createPicture = (req, res) => {
-    console.log(req.body);
     const picture = new Picture({
         ...req.body,
     });
@@ -13,8 +11,6 @@ exports.createPicture = (req, res) => {
 };
 
 exports.getPicturesSelected = (req, res) => {
-    console.log(req.body.user_id, req.body.repository_id);
-
     Picture.find({ 
         user_id: req.body.user_id,
         repository_id: req.body.repository_id,
@@ -30,7 +26,6 @@ exports.modify = (req, res) => {
             if (picture) {
                 if (req.body.operation_id === "_null" && req.body.operation_id !== picture.operation_id) {
                     fs.unlink(`temp/${picture.name}`, () => {
-                        console.log(`effacement de: temp/${picture.name}`);
                     });
                 }
             }
@@ -73,7 +68,6 @@ exports.deletePicture = (req, res) => {
 };
 
 const deletePicturefile = (dataPicture, res) => {
-    console.log("effacement du fichier de l'image");
     // eslint-disable-next-line no-undef
     const pathCompressPicture = `${process.env.FOLDER_PIC_COMPRESS}/${process.env.PICTURE_PREFIX + dataPicture.name}`;
     const pathDownloadPicture = `temp/${dataPicture.name}`;
@@ -98,7 +92,6 @@ const deletePicturefile = (dataPicture, res) => {
 };
 
 const deleteDataPicture = (dataPicture, res) => {
-    console.log("effacement des données d'une image");
     Picture.deleteOne({_id: dataPicture._id}).then(
         response => res.status(200).json({ response })
     ).catch(
