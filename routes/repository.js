@@ -8,8 +8,8 @@ router.get("/getall/",auth, repoCtrl.getAll);
 router.get("/getone/:_id",auth, repoCtrl.getOne);
 router.post("/post/",auth, repoCtrl.create);
 router.post("/selected/",auth, repoCtrl.getRepositorySelected);
-router.put("/modify/:id",auth, repoCtrl.modify);
-router.delete("/delete/:id",auth, repoCtrl.delete);
+router.put("/modify/:_id",auth, repoCtrl.modify);
+router.delete("/:_id",auth, repoCtrl.delete);
 
 
 module.exports = router;
