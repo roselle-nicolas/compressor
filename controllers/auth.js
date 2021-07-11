@@ -55,7 +55,6 @@ exports.login = (req, res) => {
             })
             .catch(error => res.status(500).json(error));
     };
-    console.log(req.body.username);
     User.findOne({ pseudo: req.body.username})
         .then(user => {
             if (!user) {

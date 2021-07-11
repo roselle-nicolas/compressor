@@ -50,7 +50,7 @@ exports.create = (req, res) => {
     repository
         .save()
         .then(() => {
-            res.status(201).json({repository});
+            res.status(201).json(repository);
         })
         .catch((error) => {
             console.error(error);
@@ -70,9 +70,7 @@ exports.modify = (req, res) => {
 };
 
 const deleteDataPicture = (dataPicture) => {
-    Picture.deleteOne({_id: dataPicture._id}).then(
-        response => console.log(response)
-    ).catch(
+    Picture.deleteOne({_id: dataPicture._id}).then().catch(
         error => console.log(error)
     );
 };
@@ -89,7 +87,6 @@ const deletePicturefile = (dataPicture) => {
             fs.unlink(pathDownloadPicture, () => {
                 if (!error) {
                     deleteDataPicture(dataPicture);
-                    
                 }else {
                     console.log(error);
                 }
@@ -100,6 +97,61 @@ const deletePicturefile = (dataPicture) => {
     });
 };
 
+const deleteSubFoldersAndPictures = (repositoryId) => {
+    // chercher les sous dossiers
+    Repo.find({
+        repository_parent_id: repositoryId
+    })
+        .then(
+            (folders) => {
+                if (folders && folders.length !== 0) {
+                    for (const folder of folders) {
+                        //suprime le sous dossier
+                        Repo.deleteOne({  _id: folder._id })
+                            .then(
+                                // recherche d'éventuel sous "sous" dossier récursivement
+                                () => {
+                                    deleteSubFoldersAndPictures(folder._id); 
+                                }
+                            )
+                            .catch(error => console.log(error));
+                        //cherches ses images
+                        Picture.find({ repository_id: folder._id })
+                            .then(
+                                //supprime ses images
+                                pictures => {
+                                    if (pictures && pictures.length !== 0) {
+                                        for (const picture of pictures) {
+                                            // chercher si plusieur data pour un même fichiers
+                                            Picture.find({
+                                                url: picture.url
+                                            })
+                                                .then(
+                                                    dataPictures => {
+                                                        if (dataPictures.length > 1) {
+                                                            // efface selement les données de l'image et non le fichier
+                                                            deleteDataPicture(picture);
+                                                        } else {
+                                                            // efface le fichier  puis les données de l'image
+                                                            deletePicturefile(picture);
+                                                        }
+                                                    }
+                                                )
+                                                .catch(error => console.log(error));
+                                        }
+                                    }
+
+                                }
+                            )
+                            .catch(error => console.log(error));
+                    }
+
+                }
+            }
+        )
+        .catch(error => console.log(error));
+};
+
 exports.delete = (req, res) => {
     // récupère toutes les images du dossier à effacé
     Picture.find({ repository_id: req.params._id})
@@ -108,14 +160,16 @@ exports.delete = (req, res) => {
                 // efface les images du dossier
                 if (pictures && pictures.length !== 0) {
                     for (const picture of pictures) {
-                        // vérifie si une l'image à étais copié dans l'application. plussieur données avec le même url image
+                        // vérifie si une image a été copié dans l'application => plusieurs données avec le même url image => on ne suprime pas le fichier image !
                         Picture.find({ url: picture.url })
                             .then(
                                 dataPictures => {
+                                    
                                     if (dataPictures.length > 1) {
                                         // efface selement les données de l'image et non le fichier
                                         deleteDataPicture(picture);
                                     }else {
+                                        // efface le fichier  puis les données de l'image
                                         deletePicturefile(picture);
                                     }
                                 }
@@ -126,14 +180,16 @@ exports.delete = (req, res) => {
             }
         )
         .catch(error => console.log(error));
-    //efface le dossier    
+    //efface le dossier. 
     Repo
-        .deleteOne({
-            _id: req.params._id
-        })
+        .deleteOne({  _id: req.params._id  })
         .then((response) => {
             res.status(200).json({ response });
+            // cherche et efface des sous dossier et leurs images
+            deleteSubFoldersAndPictures(req.params._id);
         })
         .catch(error => console.error(error));
 };
+
+
 
